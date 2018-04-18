@@ -48,3 +48,4 @@ module "portworx" {
 }
 ```
 
+For a reference example, please see [https://github.com/portworx/terraporx/tree/master/digital_ocean/centos](https://github.com/portworx/terraporx/tree/master/digital_ocean/centos)
