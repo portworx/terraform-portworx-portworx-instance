@@ -48,4 +48,16 @@ module "portworx" {
 }
 ```
 
+To use for installing Portworx, use the output ```get_px_cmd``` attribute as part
+of a ```remote-exec``` inline command.  Ex:
+```
+ provisioner "remote-exec" {
+       inline = [
+         "curl -fsSL https://get.docker.com | sh",
+         "systemctl enable docker",
+         "systemctl start docker",
+         "${module.portworx.get_px_cmd}"
+       ]
+```
+
 For a reference example, please see [https://github.com/portworx/terraporx/tree/master/digital_ocean/centos](https://github.com/portworx/terraporx/tree/master/digital_ocean/centos)
