@@ -2,55 +2,35 @@
 
 Module to simply/easily deploy Portworx through Terraform
 
-Assign appropriate command-line variables as per the docs:
+## Usage
 
-```
-variable "clusterID" { default = "" }
-variable "kvdb" { default = "" }
-variable "device_args" { default = "" }
-variable "data_if" { default = "" }
-variable "mgmt_if" { default = "" }
-variable "journal_dev" { default = "" }
-variable "scheduler" { default = ""}
-variable "token" { default = "" }
-variable "force_use" { default = "" }
-variable "zero_storage" { default = "" }
-variable "env_list" { default = "" }
-variable "secret_type" { default = "" }
-variable "cluster_secret_key" { default = "" }
+Be sure to specify the same `kvdb` and `clusterID` for all nodes in the same cluster.
+```hcl
+
+module "portworx" {
+   source = "github.com/portworx/terraform-portworx-portworx-instance"
+   clusterID = ""
+   data_if = ""
+   mgmt_if = ""
+   device_args = ""
+   force_use = ""
+   zero_storage = ""
+   kvdb = ""
+   journal_dev = "" 
+   scheduler = ""
+   token = "" 
+   zero_storage = "" 
+   env_list = "" 
+   secret_type = "" 
+   cluster_secret_key" = "" 
+}
 ```
 
 For detailed description, please see the [Portworx Docs for CLI variables](https://docs.portworx.com/runc/options.html)
 
-Be sure to specify the same clusterID for all nodes in the cluster.
-Example:
-```
-locals {
-      clusterid = "${uuid()}"
-}
-
-module "portworx" {
-   source = "github.com/portworx/terraform-portworx-portworx-instance"
-   clusterID = "${local.clusterid}"
-   data_if = "${var.d_eth_if}"
-   mgmt_if = "${var.m_eth_if}"
-   device_args = "-s /dev/sda"
-   # force_use = "true"
-   # zero_storage = "true"
-   # kvdb   { default = "" }
-   # journal_dev { default = "" }
-   # scheduler { default = ""}
-   # token { default = "" }
-   # zero_storage { default = "" }
-   # env_list { default = "" }
-   # secret_type { default = "" }
-   # cluster_secret_key" { default = "" }
-}
-```
-
 To use for installing Portworx, use the output ```get_px_cmd``` attribute as part
 of a ```remote-exec``` inline command.  Ex:
-```
+```hcl
  provisioner "remote-exec" {
        inline = [
          "curl -fsSL https://get.docker.com | sh",
@@ -59,5 +39,10 @@ of a ```remote-exec``` inline command.  Ex:
          "${module.portworx.get_px_cmd}"
        ]
 ```
+
+## Resources created
+
+- `get_px_cmd`: Command that installs an instance of Portworx
+- `clusterID` : Name of Portworx ClusterID
 
 For a reference example, please see [https://github.com/portworx/terraporx/tree/master/digital_ocean/centos](https://github.com/portworx/terraporx/tree/master/digital_ocean/centos)
