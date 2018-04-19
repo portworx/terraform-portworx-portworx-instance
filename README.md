@@ -38,6 +38,7 @@ of a ```remote-exec``` inline command.  Ex:
          "systemctl start docker",
          "${module.portworx.get_px_cmd}"
        ]
+ }
 ```
 
 ## Resources created
