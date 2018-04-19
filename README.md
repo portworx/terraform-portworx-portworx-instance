@@ -30,7 +30,7 @@ locals {
 }
 
 module "portworx" {
-   source = "../portworx"
+   source = "github.com/portworx/terraform-portworx-portworx-instance"
    clusterID = "${local.clusterid}"
    data_if = "${var.d_eth_if}"
    mgmt_if = "${var.m_eth_if}"
